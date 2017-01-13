@@ -25,6 +25,9 @@ var youtube = require('./youtube');
 
 var app = express();
 
+console.log('ALCHEMY_LANGUAGE_API_KEY: ', process.env.ALCHEMY_LANGUAGE_API_KEY);
+console.log('SPEECH_TO_TEXT_USERNAME: ', process.env.SPEECH_TO_TEXT_USERNAME);
+
 var authService = new AuthorizationV1(extend({
   username: process.env.SPEECH_TO_TEXT_USERNAME,
   password: process.env.SPEECH_TO_TEXT_PASSWORD,
