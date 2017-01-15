@@ -95,7 +95,7 @@ function startVideoSpeechStream() {
         text: result.alternatives[0].transcript,
         timestamp: result.alternatives[0].timestamps[0][1] + videoProps.currentTime
       })
-
+      console.log('result: ', result);
       concepts.updateTranscript(videoProps.transcripts);
 
     }

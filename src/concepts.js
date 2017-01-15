@@ -51,8 +51,8 @@ exports.updateTranscript = function(transcripts) {
 
   // call Cloudant API to save text 
   $.get('/save_transcript', {
-    name: "video1",
-    sentence: text,
+    transcript_name: "video1",
+    transcript_sentence: text,
     sentence_num: 0
   })
 
