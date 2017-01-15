@@ -27,14 +27,22 @@ var app = express();
 
 console.log('ALCHEMY_LANGUAGE_API_KEY: ', process.env.ALCHEMY_LANGUAGE_API_KEY);
 console.log('SPEECH_TO_TEXT_USERNAME: ', process.env.SPEECH_TO_TEXT_USERNAME);
+console.log('SPEECH_TO_TEXT_PASSWORD: ', process.env.SPEECH_TO_TEXT_PASSWORD);
 
-var authService = new AuthorizationV1(extend({
-  username: process.env.SPEECH_TO_TEXT_USERNAME,
-  password: process.env.SPEECH_TO_TEXT_PASSWORD,
-  url: 'https://stream.watsonplatform.net/speech-to-text/api'
-}, vcapServices.getCredentials('speech_to_text')));
+var authService;
+var alchemyLanguage;
+try { 
+  authService = new AuthorizationV1(extend({
+    username: process.env.SPEECH_TO_TEXT_USERNAME,
+    password: process.env.SPEECH_TO_TEXT_PASSWORD,
+    url: 'https://stream.watsonplatform.net/speech-to-text/api'
+  }, vcapServices.getCredentials('speech_to_text')));
 
-var alchemyLanguage = new AlchemyLanguageV1({});
+  alchemyLanguage = new AlchemyLanguageV1({});
+
+} catch (error) {
+  console.log('Error: ', error);
+}
 
 // Bootstrap application settings
 require('./config/express')(app);
@@ -94,4 +102,4 @@ require('./config/error-handler')(app);
 var port = process.env.VCAP_APP_PORT || 3000;
 app.listen(port);
 // eslint-disable-next-line
-console.log('listening at:', port);
+console.log('listening at: ', port);
