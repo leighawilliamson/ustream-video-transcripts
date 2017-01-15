@@ -22,25 +22,28 @@ var extend = require('extend');
 var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 var AuthorizationV1 = require('watson-developer-cloud/authorization/v1');
 var youtube = require('./youtube');
+var cloudant = {
+		 		 url : "https://a1192a94-9b7e-41e1-ad89-9b7b9706fc36-bluemix:04cecff26371b67a588c33d3e36c65489d4da4cddb07617df8aaac516ca5be23@a1192a94-9b7e-41e1-ad89-9b7b9706fc36-bluemix.cloudant.com" 		 		 
+};
 
 var app = express();
 
 if (process.env.hasOwnProperty("VCAP_SERVICES")) {
-  // Running on Bluemix. Parse out the port and host that we've been assigned.
+  // Running on Bluemix. Parse out Cloudant settings.
   console.log('running on Bluemix');
   var env = JSON.parse(process.env.VCAP_SERVICES);
-  var host = process.env.VCAP_APP_HOST;
-  var port = process.env.VCAP_APP_PORT;
-
-  // Also parse out Cloudant settings.
-  //cloudant = env['cloudantNoSQLDB'][0].credentials;  
+  cloudant = env['cloudantNoSQLDB'][0].credentials;  
+  console.log('cloudant config: ', cloudant);
 }
 else {
   console.log('running locally');
+  console.log('ALCHEMY_LANGUAGE_API_KEY: ', process.env.ALCHEMY_LANGUAGE_API_KEY);
+  console.log('SPEECH_TO_TEXT_USERNAME: ', process.env.SPEECH_TO_TEXT_USERNAME);
+  console.log('SPEECH_TO_TEXT_PASSWORD: ', process.env.SPEECH_TO_TEXT_PASSWORD);
 }
-console.log('ALCHEMY_LANGUAGE_API_KEY: ', process.env.ALCHEMY_LANGUAGE_API_KEY);
-console.log('SPEECH_TO_TEXT_USERNAME: ', process.env.SPEECH_TO_TEXT_USERNAME);
-console.log('SPEECH_TO_TEXT_PASSWORD: ', process.env.SPEECH_TO_TEXT_PASSWORD);
+
+var nano = require('nano')(cloudant.url);
+var db = nano.db.use('video_transcripts');
 
 var authService;
 var alchemyLanguage;
@@ -107,6 +110,19 @@ app.post('/api/token', function(req, res, next) {
       res.send(token);
     }
   );
+});
+
+app.get('/save_transcript', function(request, response) {
+  var name = request.query.transcript_name;
+  var sentence = request.query.transcript_text;
+  var sentence_num = request.query.sentence_num;
+
+  var transcriptRecord = { 'name': name, 'sentence' : sentence, 'sentence_num' : parseInt(sentence_num), 'date': new Date() };
+  db.insert(transcriptRecord, function(err, body, header) {
+    if (!err) {       
+      response.send('Successfully added one sentence to the DB');
+    }
+  });
 });
 
 // error-handler application settings

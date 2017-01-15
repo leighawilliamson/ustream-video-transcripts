@@ -70,6 +70,7 @@ function startVideoSpeechStream() {
   $('#inlinevideo').attr('src', videoProps.curURL + '#t=' + videoProps.currentTime);
   var myMediaElement = document.getElementById('inlinevideo');
   console.log('video: create media element source');
+  console.log('starting video: ', videoProps.title);
   videoProps.stream = WatsonSpeechToText.recognizeElement({
     element: myMediaElement,
     token: videoProps.ctx.token,
