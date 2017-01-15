@@ -39,7 +39,7 @@ exports.updateTranscript = function(transcripts) {
     return transcript.text;
   }).join(' ');
 
-  console.log('text: ', text);
+  // console.log('text: ', text);
 
   if (text.length == 0 || text === STATE.text) {
     return;
@@ -49,12 +49,7 @@ exports.updateTranscript = function(transcripts) {
     updateTranscriptContent(transcripts, text);
   }
 
-  // call Cloudant API to save text 
-  $.get('/save_transcript', {
-    transcript_name: "video1",
-    transcript_sentence: text,
-    sentence_num: 0
-  })
+
 
   // call AlchemyLanguage API to get concepts from text
   $.post('/api/concepts', {

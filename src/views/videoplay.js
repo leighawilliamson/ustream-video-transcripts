@@ -86,16 +86,31 @@ function startVideoSpeechStream() {
 
   videoProps.stream.on('result', function(result) {
     // update the text for the current sentence with the default alternative.
-    // there may be multiple alternatives but this example app ignores all but the first.
-    $('.transcript-current-sentence').html(result.alternatives[0].transcript);
+    // there may be multiple alternatives and we use the recommended one.
+    var useIndex = result.index;
+    var sentence = result.alternatives[useIndex].transcript;
+    console.log('recommended to use transcript index: ', useIndex);
+    console.log('recommended sentence: ', sentence);
+    $('.transcript-current-sentence').html(result.alternatives[useIndex].transcript);
     $('.transcript--content')[0].scrollTop = $('.transcript--content')[0].scrollHeight;
     if (result.final) {
       // if we have the final text for that sentence, start a new one
       videoProps.transcripts.push({
-        text: result.alternatives[0].transcript,
-        timestamp: result.alternatives[0].timestamps[0][1] + videoProps.currentTime
+        text: result.alternatives[useIndex].transcript,
+        timestamp: result.alternatives[useIndex].timestamps[0][1] + videoProps.currentTime
       })
       console.log('result: ', result);
+    
+      // call Cloudant API to save text 
+      $.get('/save_transcript', {
+        transcript_name: videoProps.title,
+        transcript_sentence: sentence,
+        sentence_num: videoProps.transcripts.length
+      }).done(function(results) {
+        console.log('Cloudant result: ', results);
+        }
+      );
+
       concepts.updateTranscript(videoProps.transcripts);
 
     }
