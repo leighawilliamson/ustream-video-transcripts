@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="css/style.css">
+  <title>Tulane Demo Video Transcription</title>
+  <meta charset="utf-8">
+  <meta name="og:title" content="Tulane Demo">
+  <meta name="og:description" content="">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+  <div class="_dashboard--header">
+    <div class="_dashboard--container">
+      <a class="header--container" href="/">
+        <div class="header--logo">
+          <img src="images/logo.png" alt="" />
+        </div>
+        <div class="header--title">
+          Tulane Demo
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <div class="_dashboard--video-session">
+    <div class="_dashboard--container">
+      <a class="video-session--another-video-btn" href="/#video-picking">
+        <span class="video-session--back-btn-icon icon icon-back-btn"></span>
+        <span class="video-session--text">Try another video</span>
+      </a>
+
+      <div class="video-session--video" id="videoSession">
+        <table id="transcript_table">
+          <tr>
+            <th>Sentence</th>
+          </tr>
+        </table>    
+      </div>
+
+      <div class="video-session--video-title">
+      </div>
+
+    </div>
+  </div>
+
+
+
+  <div class="_dashboard--footer">
+    <div class="_dashboard--container">
+      <div class="footer--title">
+        Learn more
+      </div>
+      <div class="footer--links-container">
+        <a class="footer--link" href="https://github.com/leighwilliamson/audio-analysis">
+          Fork on Github
+        </a>
+        <a class="footer--link" href="https://bluemix.net/deploy?repository=https://github.com/leighwilliamson/audio-analysis/">
+          Deploy on Bluemix
+        </a>
+        <a class="footer--link" href="http://www.ibm.com/watson/developercloud/concept-insights.html" target="_blank">
+          AlchemyLanguage
+        </a>
+        <a class="footer--link" href="http://www.ibm.com/watson/developercloud/speech-to-text.html" target="_blank">
+          Speech to Text
+        </a>
+      </div>
+
+      <div class="footer--dashboard-legal-links-container">
+        <a class="footer--legal-link" href="/tos">
+          Terms & Conditions
+        </a> |
+        <a class="footer--legal-link" href="http://www.ibm.com/privacy/us/en/" target="_blank">
+          Privacy Policy
+        </a> |
+        <a class="footer--legal-link" href="http://www.ibm.com/watson/developercloud/" target="_blank">
+          Built with IBM Watson
+        </a> |
+        <a class="footer--legal-link" href="https://github.com/leighwilliamson/audio-analysis" target="_blank">
+          Fork on GitHub
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Place js files at the end of the document, with fallbacks for CDNs -->
+  <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+  <script src="js/showtranscript.js"></script>
+</body>
+
+</html>

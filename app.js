@@ -71,6 +71,10 @@ app.get('/dashboard', function(req, res) {
   res.render('dashboard');
 });
 
+app.get('/show_transcript', function(req, res) {
+  res.render('show_transcript');
+});
+
 app.get('/tos', function(req, res) {
   res.render('tos');
 });
@@ -124,6 +128,19 @@ app.get('/save_transcript', function(request, response) {
     }
   });
 });
+
+app.get('/view_transcript', function(request, response) {
+  db.view('transcript_view', 'transcript-view', function(err, body) {
+  if (!err) {
+      var sentences = [];
+      body.rows.forEach(function(doc) {
+        sentences.push(doc.value);		      
+      });
+      response.send(JSON.stringify(sentences));
+    }
+  });
+});
+
 
 // error-handler application settings
 require('./config/error-handler')(app);

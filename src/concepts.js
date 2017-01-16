@@ -104,7 +104,7 @@ function updateTimelineContent() {
   if (concept == null)
     return;
 
-  console.log('concept: ', concept);
+  // console.log('concept: ', concept);
   var relevance = parseFloat(concept.relevance);
   var html = '<div class="timeline--content-block">';
   if (relevance > 0.9) {

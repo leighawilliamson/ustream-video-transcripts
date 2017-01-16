@@ -69,8 +69,12 @@ function startVideoSpeechStream() {
   $('._hidden--video').html('<video id="inlinevideo" hidden></video>');
   $('#inlinevideo').attr('src', videoProps.curURL + '#t=' + videoProps.currentTime);
   var myMediaElement = document.getElementById('inlinevideo');
-  console.log('video: create media element source');
-  console.log('starting video: ', videoProps.title);
+  //console.log('video: create media element source');
+  var video_title = videoProps.title;
+  video_title = video_title.trim();
+  // video_title = video_title.slice(2,-2);
+  // video_title = video_title.trim();
+  console.log('starting video: ', video_title);
   videoProps.stream = WatsonSpeechToText.recognizeElement({
     element: myMediaElement,
     token: videoProps.ctx.token,
@@ -92,17 +96,18 @@ function startVideoSpeechStream() {
     if (result.final) {
       // if we have the final text for that sentence, record it and start a new one
       console.log('result: ', result);
-      var useIndex = result.index;
+      var useIndex = 1;
       var sentence = result.alternatives[useIndex].transcript;
       console.log('recommended to use transcript index: ', useIndex);
+      console.log('video title: ', video_title);
       console.log('recommended sentence: ', sentence);
-      console.log('sentence number: ', videoProps.transcripts.length);
+      console.log('sentence number: ', result.index);
      
       // call Cloudant API to save text 
       $.get('/save_transcript', {
-        transcript_name: videoProps.title,
-        transcript_sentence: sentence,
-        sentence_num: videoProps.transcripts.length
+        transcript_name: video_title,
+        transcript_text: sentence,
+        sentence_num: result.index
       }).done(function(results) {
         console.log('Cloudant result: ', results);
         }
