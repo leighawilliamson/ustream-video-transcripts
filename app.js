@@ -130,8 +130,9 @@ app.get('/save_transcript', function(request, response) {
 });
 
 app.get('/view_transcript', function(request, response) {
-  db.view('transcript_view', 'transcript-view', function(err, body) {
+  db.view('transcript_view', 'transcript-by-title', {keys: ['key1']} , function(err, body) {
   if (!err) {
+    console.log('/view_transcript: ',body);
       var sentences = [];
       body.rows.forEach(function(doc) {
         sentences.push(doc.value);		      

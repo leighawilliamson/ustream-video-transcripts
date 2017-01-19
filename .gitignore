@@ -2,6 +2,7 @@ node_modules
 .DS_Store
 public/js/dashboard.js
 public/js/index.js
+public/js/showtranscript.js
 .env
 
 npm-debug.log
