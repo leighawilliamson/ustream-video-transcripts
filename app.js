@@ -54,7 +54,7 @@ try {
     url: 'https://stream.watsonplatform.net/speech-to-text/api'
   }, vcapServices.getCredentials('speech_to_text')));
 
-  alchemyLanguage = new AlchemyLanguageV1({});
+//  alchemyLanguage = new AlchemyLanguageV1({});
 
 } catch (error) {
   console.log('Error: ', error);
@@ -80,13 +80,13 @@ app.get('/tos', function(req, res) {
 });
 
 app.post('/api/concepts', function(req, res, next) {
-  alchemyLanguage.concepts(req.body, function(err, result) {
-    if (err)
-      next(err);
-    else
-      res.json(result);
-    }
-  );
+//  alchemyLanguage.concepts(req.body, function(err, result) {
+//    if (err)
+//      next(err);
+//    else
+//      res.json(result);
+//    }
+//  );
 });
 
 app.get('/api/video', function(req, res, next) {
