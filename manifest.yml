@@ -3,11 +3,15 @@ declared-services:
   speech-to-text-service:
     label: speech_to_text
     plan: standard
+  Cloudant-NoSQL-TranscriptDB:
+    label: TranscriptDB
+    plan: Lite
 
 applications:
-- name: razorback-video-demo
+- name: razorback-video-transcripts
   path: .
   command: npm start
   memory: 512M
   services:
   - speech-to-text-service
+  - Cloudant-NoSQL-TranscriptDB
