@@ -19,13 +19,12 @@ require('dotenv').config({ silent: true });
 var express = require('express');
 var vcapServices = require('vcap_services');
 var extend = require('extend');
-var AlchemyLanguageV1 = require('watson-developer-cloud/alchemy-language/v1');
 var AuthorizationV1 = require('watson-developer-cloud/authorization/v1');
 var youtube = require('./youtube');
 var cloudant = {
-		 		 url : "https://a1192a94-9b7e-41e1-ad89-9b7b9706fc36-bluemix:04cecff26371b67a588c33d3e36c65489d4da4cddb07617df8aaac516ca5be23@a1192a94-9b7e-41e1-ad89-9b7b9706fc36-bluemix.cloudant.com" 		 		 
+		 		 url : "https://eb3a04c9-89cb-4a62-9f20-fcc94e6c1019-bluemix:ca37a9c21daf17bb507acc46c1c3ed1ad25fbe9fa0e7ee788d10371c714c3a7c@eb3a04c9-89cb-4a62-9f20-fcc94e6c1019-bluemix.cloudant.com" 		 		 
 };
-
+const https = require('https');
 var app = express();
 
 if (process.env.hasOwnProperty("VCAP_SERVICES")) {
@@ -37,7 +36,6 @@ if (process.env.hasOwnProperty("VCAP_SERVICES")) {
 }
 else {
   console.log('running locally');
-  console.log('ALCHEMY_LANGUAGE_API_KEY: ', process.env.ALCHEMY_LANGUAGE_API_KEY);
   console.log('SPEECH_TO_TEXT_USERNAME: ', process.env.SPEECH_TO_TEXT_USERNAME);
   console.log('SPEECH_TO_TEXT_PASSWORD: ', process.env.SPEECH_TO_TEXT_PASSWORD);
 }
@@ -46,15 +44,12 @@ var nano = require('nano')(cloudant.url);
 var db = nano.db.use('video_transcripts');
 
 var authService;
-var alchemyLanguage;
 try { 
   authService = new AuthorizationV1(extend({
     username: process.env.SPEECH_TO_TEXT_USERNAME,
     password: process.env.SPEECH_TO_TEXT_PASSWORD,
     url: 'https://stream.watsonplatform.net/speech-to-text/api'
   }, vcapServices.getCredentials('speech_to_text')));
-
-//  alchemyLanguage = new AlchemyLanguageV1({});
 
 } catch (error) {
   console.log('Error: ', error);
@@ -80,13 +75,7 @@ app.get('/tos', function(req, res) {
 });
 
 app.post('/api/concepts', function(req, res, next) {
-//  alchemyLanguage.concepts(req.body, function(err, result) {
-//    if (err)
-//      next(err);
-//    else
-//      res.json(result);
-//    }
-//  );
+
 });
 
 app.get('/api/video', function(req, res, next) {
@@ -130,16 +119,35 @@ app.get('/save_transcript', function(request, response) {
 });
 
 app.get('/view_transcript', function(request, response) {
-  db.view('transcript_view', 'transcript-by-title', {keys: ['key1']} , function(err, body) {
-  if (!err) {
-    console.log('/view_transcript: ',body);
-      var sentences = [];
-      body.rows.forEach(function(doc) {
-        sentences.push(doc.value);		      
+  var queryUrl = cloudant.url + "/video_transcripts/_design/transcript_design/_view/transcript-by-title";
+  var sentences = [];
+  if (request.query.title){
+    queryUrl = queryUrl + "?key=" + request.query.title;
+    console.log("title: ", request.query.title);
+  }
+  //console.log('url: ', queryUrl);
+  
+  var callback=function(data)
+    {
+    	//console.log(data);
+      data.rows.forEach(function(doc) {
+        //console.log("sentence: ", doc.value);
+        sentences[doc.value[0]] = doc.value[1];		      
       });
       response.send(JSON.stringify(sentences));
     }
-  });
+
+  https.get(queryUrl, (res) => {
+      var body='';
+        res.on('data', function(data){
+            body+=data;
+        });
+        res.on('end', function(){
+            var result=JSON.parse(body);
+            callback(result);
+        });
+  });    
+
 });
 
 

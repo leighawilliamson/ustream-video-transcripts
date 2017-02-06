@@ -1,15 +1,15 @@
 {
-  "name": "audio-analysis",
+  "name": "razorback-video-transcripts",
   "version": "1.0.0",
-  "description": "A sample nodejs app for Bluemix that combines Speech to Text with AlchemyLanguage to retrieve concepts from videos",
+  "description": "A sample nodejs app for Bluemix that uses Speech to Text to retrieve transcripts from videos",
   "repository": {
     "type": "git",
-    "url": "https://github.com/watson-developer-cloud/audio-analysis.git"
+    "url": "https://github.com/leighawilliamson/razorback-video-transcripts.git"
   },
   "author": "IBM Corp.",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/watson-developer-cloud/audio-analysis/issues"
+    "url": "https://github.com/leighawilliamson/razorback-video-transcripts/issues"
   },
   "browserify-shim": {
     "jquery": "global:jQuery"
@@ -22,7 +22,7 @@
   "scripts": {
     "start": "node app.js",
     "build-debug": "browserify src/index.js > public/js/index.js && browserify src/dashboard.js > public/js/dashboard.js && browserify src/showtranscript.js > public/js/showtranscript.js",
-    "build": "browserify src/index.js | uglifyjs -nc > public/js/index.js && browserify src/dashboard.js | uglifyjs -nc > public/js/dashboard.js && browserify src/showtranscript.js | uglifyjs -nc > public/js/showtranscript.js",
+    "build": "browserify src/index.js | uglifyjs -nc warnings=false > public/js/index.js && browserify src/dashboard.js | uglifyjs -nc warnings=false > public/js/dashboard.js && browserify src/showtranscript.js | uglifyjs -nc warnings=false > public/js/showtranscript.js",
     "watch": "watchify -v -d -o public/js/index.js src/index.js",
     "postinstall": "npm run build",
     "lint": "eslint ."
