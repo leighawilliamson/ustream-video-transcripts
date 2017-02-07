@@ -1,15 +1,15 @@
 {
-  "name": "razorback-video-transcripts",
+  "name": "ustream-video-transcripts",
   "version": "1.0.0",
   "description": "A sample nodejs app for Bluemix that uses Speech to Text to retrieve transcripts from videos",
   "repository": {
     "type": "git",
-    "url": "https://github.com/leighawilliamson/razorback-video-transcripts.git"
+    "url": "https://github.com/leighawilliamson/ustream-video-transcripts.git"
   },
   "author": "IBM Corp.",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/leighawilliamson/razorback-video-transcripts/issues"
+    "url": "https://github.com/leighawilliamson/ustream-video-transcripts/issues"
   },
   "browserify-shim": {
     "jquery": "global:jQuery"

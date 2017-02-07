@@ -8,7 +8,7 @@ declared-services:
     plan: Lite
 
 applications:
-- name: razorback-video-transcripts
+- name: ustream-video-transcripts
   path: .
   command: npm start
   memory: 512M
