@@ -40,16 +40,28 @@
 
   <div class="_dashboard--video-session">
     <div class="_dashboard--container"> 
-      <div class="video-session--video-title">
+      <div class="video-session--video-title">   
+        <p>Review and edit the transcript. Click in the transcript text to make corrections.</p>
+        <p>Use the <button disabled>Update</button> button to save changes for each individual sentence
+        after making a change.</p>
         <h1>Video Title: Room Selection - Phase 3</h1>
-      </div>     
-      <div  id="transcript-window">
-      <h3>Transcript start</h3>
-        <table id="transcript_table">
-          <tr top="10">
-            <th>Transcript end</th>
+      </div>    
+
+      <div  id="transcript-window" style="border:2px inset #AAA;cursor:text;overflow:auto;padding:4px">
+        <table id="transcript_table" border="1">
+          <thead><tr><th colspan="2">Transcript start</th></tr></thead>
+          <tbody contenteditable="true">
+          <tr top="10" contenteditable="false">
+            <th colspan="2">Transcript end</th>
           </tr>
-        </table>    
+          </tbody>
+        </table>   
+      </div>
+      <div style="text-align: center">
+      <button>Download Transcript</button>
+      </div>
+      <div>
+      <p></p>
       </div>
     </div>
   </div>
@@ -62,14 +74,14 @@
         Learn more
       </div>
       <div class="footer--links-container">
-        <a class="footer--link" href="https://github.com/leighwilliamson/audio-analysis">
+        <a class="footer--link" href="https://github.com/leighwilliamson/razorback-video-transcripts">
           Fork on Github
         </a>
-        <a class="footer--link" href="https://bluemix.net/deploy?repository=https://github.com/leighwilliamson/audio-analysis/">
+        <a class="footer--link" href="https://bluemix.net/deploy?repository=https://github.com/leighwilliamson/razorback-video-transcripts/">
           Deploy on Bluemix
         </a>
-        <a class="footer--link" href="http://www.ibm.com/watson/developercloud/concept-insights.html" target="_blank">
-          AlchemyLanguage
+        <a class="footer--link" href="https://console.ng.bluemix.net/docs/services/Cloudant/cloudant.html#overview" target="_blank">
+          Cloudant DB
         </a>
         <a class="footer--link" href="http://www.ibm.com/watson/developercloud/speech-to-text.html" target="_blank">
           Speech to Text
@@ -86,7 +98,7 @@
         <a class="footer--legal-link" href="http://www.ibm.com/watson/developercloud/" target="_blank">
           Built with IBM Watson
         </a> |
-        <a class="footer--legal-link" href="https://github.com/leighwilliamson/audio-analysis" target="_blank">
+        <a class="footer--legal-link" href="https://github.com/leighwilliamson/razorback-video-transcripts" target="_blank">
           Fork on GitHub
         </a>
       </div>
@@ -96,6 +108,7 @@
   <!-- Place js files at the end of the document, with fallbacks for CDNs -->
   <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
   <script src="js/showtranscript.js"></script>
+  
 </body>
 
 </html>
